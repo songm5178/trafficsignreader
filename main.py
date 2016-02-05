@@ -8,13 +8,11 @@ from matplotlib import pyplot as plt
 if __name__ == '__main__':
     # read image
     src = cv2.imread('traff1.jpg', cv2.IMREAD_COLOR)
-    dst = cv2.cvtColor(src, cv2.COLOR_BGR2HSV)  
-#    cv2.imshow('image', dst)
-#    cv2.waitKey(0)
-#    cv2.destroyAllWindows()
-   plt.imshow(dst, cmap = 'gray', interpolation = 'bicubic')
-   plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-   plt.show()    
+    dst = cv2.cvtColor(src, cv2.COLOR_RGB2HSV)  
+    ##### Use this to find coordinates ####
+    # plt.imshow(dst, cmap = 'gray', interpolation = 'bicubic')
+    # plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    # plt.show()    
 
     # extract green color from HSV
 
@@ -30,10 +28,12 @@ if __name__ == '__main__':
 
             # else:
                 # cv2.circle(dst,(j, i),5,(0,0,0))
-    print dst[300, 190]
-    print dst[301, 190]
-    lower_green = np.array([50, 38, 100])
-    upper_green = np.array([150, 255, 255])
+    print dst[200, 490]
+    print dst[200, 430]
+    print dst[200, 200]
+    print dst[200, 100]
+    lower_green = np.array([40, 220, 120])
+    upper_green = np.array([50, 255, 160])
     green_mask = cv2.inRange(dst, lower_green, upper_green)
     res = cv2.bitwise_and(src, src, mask= green_mask)
   
