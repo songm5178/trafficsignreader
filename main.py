@@ -6,48 +6,72 @@ import sys
 from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
-    # read image
-    src = cv2.imread('traff1.jpg', cv2.IMREAD_COLOR)
+    #### Initial Tesseract
+    message = pytesseract.image_to_string(Image.open('traff2.jpg'))
+    print "=====Colored Image, tesseract output======"
+    print message
+    
+    #### read image
+    src = cv2.imread('traff2.jpg', cv2.IMREAD_COLOR)
     dst = cv2.cvtColor(src, cv2.COLOR_RGB2HSV)  
-    ##### Use this to find coordinates ####
-    # plt.imshow(dst, cmap = 'gray', interpolation = 'bicubic')
-    # plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-    # plt.show()    
+    ## Use this to find coordinates #####
+    plt.imshow(dst, cmap = 'gray', interpolation = 'bicubic')
+    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    plt.show()    
 
-    # extract green color from HSV
+    #### Extract green color from HSV
 
     
-    # ij_index = [-1, -1] 
-    # max_h = -1
-    # for i in range (dst.shape[0]):
-        # for j in range (dst.shape[1]):
-
-            # if (dst[i,j][0] >= 35 and dst[i,j][0] < 40 and \
-                # dst[i,j][1] >= 40 and dst[i,j][2] < 50 and dst[i,j][2] > 240):
-                # cv2.circle(dst,(j, i),5,(255, 0, 255))
-
-            # else:
-                # cv2.circle(dst,(j, i),5,(0,0,0))
-    print dst[200, 490]
-    print dst[200, 430]
-    print dst[200, 200]
-    print dst[200, 100]
-    lower_green = np.array([40, 220, 120])
+    # This is how you look for HSV values
+    print dst[350, 550]
+    print dst[95, 576]
+    print dst[194, 248]
+    # print dst[200, 100]
+    lower_green = np.array([30, 220, 75])
     upper_green = np.array([50, 255, 160])
     green_mask = cv2.inRange(dst, lower_green, upper_green)
     res = cv2.bitwise_and(src, src, mask= green_mask)
   
     
-    cv2.imshow('src',src)
+    # cv2.imshow('src',src)
     cv2.imshow('mask', green_mask)
-    cv2.imshow('res', res)
+    # cv2.imshow('res', res)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+
+    #### Morphology
+    
+    ## FUTURE WORK TODO: scale the kernel by size of traffic sign
+    cv2.imwrite('mask.jpg', green_mask)
+
+    message = pytesseract.image_to_string(Image.open('mask.jpg'))
+    print "=====Before morphology, tesseract output======"
+    print message
+    
+    kernel = np.ones((5,5),np.uint8)
+    morph = cv2.dilate(green_mask, kernel, iterations = 1)
+    kernel = np.ones((3,3),np.uint8)
+    morph = cv2.erode(morph, kernel, iterations = 1)
+    cv2.imshow('eraer', morph)
+        
+    #### Filter
+    
+    ## BLUR : TODO, maybe move this before masking.
+    # blur = np.ones((dst.shape[0],dst.shape[1]), np.uint8)
+    # cv2.medianBlur(morph, 5, blur)
+    # cv2.imshow('blurred', blur)
+    
+    #### Extract traffic sign shape
+    
+    
+    #### run tesseract on traffic sign
+
+    cv2.imwrite('morphed_image.jpg', morph)
+    message = pytesseract.image_to_string(Image.open('morphed_image.jpg'))
+    print "=====After morphology, tesseract output======"
+    print message
+
+    
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-    
-    # extract traffic sign shape
-    
-    
-    # run tesseract on traffic sign
-
+    cv2.destroyAllWindows()    
     
