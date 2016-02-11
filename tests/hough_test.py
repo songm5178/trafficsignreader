@@ -11,18 +11,29 @@ filename = 'traff3.jpg';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-cv2.imshow('grat',gray)
+gray = cv2.bilateralFilter(gray, 11, 17, 17)
+cv2.imshow('gray',gray)
 
 
-edges = cv2.Canny(gray, 150, 170);
+edges = cv2.Canny(gray, 170, 200);
 cv2.imshow('edge', edges);
-'''
-plt.subplot(121),plt.imshow(img,cmap = 'gray')
-plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-plt.subplot(122),plt.imshow(edges,cmap = 'gray')
-plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
 
-plt.show()'''
+(_, cnts, _) = cv2.findContours(edges.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:10]
+screenCnt = None
+
+for c in cnts:
+	# approximate the contour
+	peri = cv2.arcLength(c, True)
+	approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+	
+	if len(approx) == 4:
+		screenCnt = approx
+		break
+
+
+cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
+cv2.imshow("traffic", img)
 
 
 cv2.waitKey(0)
