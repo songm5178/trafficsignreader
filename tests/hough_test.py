@@ -7,11 +7,11 @@ from matplotlib import pyplot as plt
 
 
 
-filename = 'traff3.jpg';
+filename = 'traff4.jpg';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-gray = cv2.bilateralFilter(gray, 11, 17, 17)
+gray = cv2.bilateralFilter(gray, 9, 19,50 )
 cv2.imshow('gray',gray)
 
 
