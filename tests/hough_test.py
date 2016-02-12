@@ -2,13 +2,14 @@ import cv2
 import numpy as np 
 import sys
 import pytesseract
+import math
 from PIL import Image
 from matplotlib import pyplot as plt
 
 
 
 
-filename = 'traff2.jpg';
+filename = '../mask.jpg';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -94,6 +95,22 @@ print screenCnt[leftTop]
 print screenCnt[leftBottom]
 print screenCnt[rightTop]
 print screenCnt[rightBottom]
+
+dx = screenCnt[rightTop][0][0] - screenCnt[leftTop][0][0]
+dy = screenCnt[rightTop][0][1] - screenCnt[leftTop][0][1]
+angle = math.degrees(math.atan2(-dy, dx))
+centerx = 0
+centery = 0
+for i in range(0, 4):
+    centerx = centerx + screenCnt[i][0][0]
+    centery = centery + screenCnt[i][0][1]
+centerx = centerx / 4
+centery = centery / 4
+rows = 1000
+cols = 1000
+M = cv2.getRotationMatrix2D((centerx,centery),-angle, 1)
+dst = cv2.warpAffine(img,M,(cols,rows))
+cv2.imshow("asdf", dst)
 
 #screenCnt = cv2.convexHull(screenCnt)
 cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
