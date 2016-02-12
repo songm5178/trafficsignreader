@@ -14,6 +14,8 @@ if __name__ == '__main__':
     
     #### read image
     src = cv2.imread(filename, cv2.IMREAD_COLOR)
+    cv2.imshow('original', src)
+    
     blur = np.ones((src.shape[0],src.shape[1]), np.uint8)
     cv2.medianBlur(src, 3, src)
     cv2.imshow('blurred', src)
@@ -31,7 +33,7 @@ if __name__ == '__main__':
 
     
     # This is how you look for HSV values
-    print dst[200, 400]
+    print dst[310, 305]
     print dst[350, 580]
     print dst[358, 284]
     
@@ -54,11 +56,13 @@ if __name__ == '__main__':
 
     
     
-    
     #### Morphology
     
     ## FUTURE WORK TODO: scale the kernel by size of traffic sign
-    cv2.findContours
+    #cv2.findContours
+    num = cv2.countNonZero(green_mask);
+    print "number of green pixels -->"
+    print num
     
     
     cv2.imwrite('mask.jpg', green_mask)
@@ -67,12 +71,17 @@ if __name__ == '__main__':
     print "=====Before morphology, tesseract output======"
     print message
     
-    kernel = np.ones((5,5),np.uint8)
+    kernel = np.ones((3,3),np.uint8)
     morph = cv2.dilate(green_mask, kernel, iterations = 1)
     kernel = np.ones((3,3),np.uint8)
     morph = cv2.erode(morph, kernel, iterations = 1)
     cv2.imshow('eraer', morph)
         
+            
+    #### rotate image
+    
+    
+
     #### Filter
     
     ## BLUR : TODO, maybe move this before masking.

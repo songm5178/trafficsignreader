@@ -107,8 +107,8 @@ def rotate(filename):
 		centery = centery + screenCnt[i][0][1]
 	centerx = centerx / 4
 	centery = centery / 4
-	rows = 1000
-	cols = 1000
+	(rows, cols, _) = img.shape
+	
 	M = cv2.getRotationMatrix2D((centerx,centery),-angle, 1)
 	dst = cv2.warpAffine(img,M,(cols,rows))
 	cv2.imshow("Rotate output", dst)
