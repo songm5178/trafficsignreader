@@ -8,7 +8,8 @@ from matplotlib import pyplot as plt
 
 
 
-filename = 'traff3.jpg';
+#filename = 'traff3.jpg';
+filename = '/Users/xuez/Desktop/test/DSC_0698.JPG'
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
