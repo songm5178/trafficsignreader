@@ -2,14 +2,14 @@ import cv2
 import numpy as np 
 import sys
 import pytesseract
+import math
 from PIL import Image
 from matplotlib import pyplot as plt
 
 
 
 
-#filename = 'traff3.jpg';
-filename = '/Users/xuez/Desktop/test/DSC_0698.JPG'
+filename = 'traff3.jpg';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -96,16 +96,28 @@ print screenCnt[leftBottom]
 print screenCnt[rightTop]
 print screenCnt[rightBottom]
 
+dx = screenCnt[rightTop][0][0] - screenCnt[leftTop][0][0]
+dy = screenCnt[rightTop][0][1] - screenCnt[leftTop][0][1]
+angle = math.degrees(math.atan2(-dy, dx))
+centerx = 0
+centery = 0
+for i in range(0, 4):
+    centerx = centerx + screenCnt[i][0][0]
+    centery = centery + screenCnt[i][0][1]
+centerx = centerx / 4
+centery = centery / 4
+rows = 1000
+cols = 1000
+M = cv2.getRotationMatrix2D((centerx,centery),-angle, 1)
+dst = cv2.warpAffine(img,M,(cols,rows))
+cv2.imshow("asdf", dst)
+
 #screenCnt = cv2.convexHull(screenCnt)
 cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
 cv2.imshow("traffic", img)
 
-
-
 crop_img = img[screenCnt[leftTop][0][1]-50:screenCnt[leftBottom][0][1]+50, screenCnt[leftTop][0][0]-50:screenCnt[rightBottom][0][0]+50]
 cv2.imshow('crop_img', crop_img)
-
-
 
 
 ### hough detection
