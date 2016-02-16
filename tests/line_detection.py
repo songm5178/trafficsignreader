@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 
 
 
-filename = '../IMG_3467.jpg';
+filename = 'equ.jpg';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
