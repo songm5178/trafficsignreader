@@ -1,9 +1,0 @@
-import cv2
-import numpy as np 
-import sys
-import pytesseract
-import math
-from PIL import Image
-from matplotlib import pyplot as plt
-
-

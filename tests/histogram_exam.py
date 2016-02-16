@@ -7,22 +7,25 @@ from PIL import Image
 from matplotlib import pyplot as plt
 
 
-file_ori = '/Users/xuez/Documents/RHIT/YGR1/test/DSC_0645.JPG';
-file_comp = '/Users/xuez/Desktop/test/DSC_0645.JPG'
+filename = '../IMG_3467.jpg'
 
-ori = cv2.imread(file_ori)
-comp = cv2.imread(file_comp)
-gray_ori = cv2.cvtColor(ori, cv2.COLOR_RGB2GRAY)
-grap_comp = cv2.cvtColor(comp, cv2.COLOR_RGB2GRAY)
-gray = cv2.bilateralFilter(gray, 11, 17,17 )
-cv2.imshow('gray',gray)
+img = cv2.imread(filename)
 
-'''
-	#Mask
-    
-    make_mask('preproced.png')
+gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+cv2.imshow('gray', gray)
+cv2.imwrite('gray.jpg', gray)
+message = pytesseract.image_to_string(Image.open('gray.jpg'))
+print message
 
-    #Rotate
 
-    rotate('mask.png')
- '''
+#gray = cv2.bilateralFilter(gray, 11, 17,17 )
+equ = cv2.equalizeHist(gray)
+cv2.imwrite('equ.jpg', equ)
+message = pytesseract.image_to_string(Image.open('equ.jpg'))
+print message
+
+
+cv2.imshow('equ', equ)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

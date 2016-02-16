@@ -7,8 +7,8 @@ from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
     #### Initial Tesseract
-    filename = '/mnt/hgfs/xuez/Desktop/test/DSC_0696.JPG'
-#    filename = 'traff4.JPG'
+ #   filename = ''
+    filename = 'traff3.JPG'
     message = pytesseract.image_to_string(Image.open(filename))
     print "=====Colored Image, tesseract output======"
     print message
