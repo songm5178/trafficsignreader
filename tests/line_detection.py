@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 
 
 
-filename = 'equ.jpg';
+filename = '../morphed_mask.png';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -21,9 +21,9 @@ edges = cv2.Canny(gray, 150, 170);
 cv2.imshow('edge', edges);
 
 
-# minLineLength = 600
-# maxLineGap = 200
-lines = cv2.HoughLinesP(edges,1,np.pi/180,10)
+minLineLength = 3
+maxLineGap = 250
+lines = cv2.HoughLinesP(edges,1,np.pi/180,10,minLineLength,maxLineGap)
 
 # for i in range(len(lines)):
 # 	for x1,y1,x2,y2 in lines[i]:

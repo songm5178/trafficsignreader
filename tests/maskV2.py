@@ -22,10 +22,10 @@ def crop2uint8(inputmat):
     
     
     
-if __name__ == '__main__':
+def make_mask(filename):
     
     #### Initial Tesseract
-    filename = 'traff2.jpg'
+    filename = 'preproced.png'
 
     
     #### read image
@@ -69,7 +69,11 @@ if __name__ == '__main__':
     mask_morph = cv2.erode(mask_morph, kernel, iterations = 1)
     
     cv2.imshow('mask',mask)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()  
     cv2.imshow('morph',mask_morph)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()  
     
     cv2.imwrite('mask.png', mask)
     cv2.imwrite('morphed_mask.png', mask_morph)
@@ -82,6 +86,8 @@ if __name__ == '__main__':
     message = pytesseract.image_to_string(Image.open('morphed_mask.png'))
     print(message)
     
+
     cv2.waitKey(0)
-    cv2.destroyAllWindows()    
+    cv2.destroyAllWindows()  
+    return
     

@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 
 
 
-filename = './DSC_0723.JPG';
+filename = '../mask.png';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -39,11 +39,11 @@ for c in cnts:
 print [screenCnt]
 
 
-
 smallest = 99999
 smallestIndex = 0
 smaller = 99999
 smallerIndex = 0
+
 for i in range(0, 4):
     if screenCnt[i][0][0] < smallest:
         smaller = smallest
@@ -106,8 +106,8 @@ for i in range(0, 4):
     centery = centery + screenCnt[i][0][1]
 centerx = centerx / 4
 centery = centery / 4
-rows = 1000
-cols = 1000
+(rows, cols, _) = img.shape
+
 M = cv2.getRotationMatrix2D((centerx,centery),-angle, 1)
 dst = cv2.warpAffine(img,M,(cols,rows))
 cv2.imshow("asdf", dst)
