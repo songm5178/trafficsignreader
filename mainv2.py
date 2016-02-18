@@ -6,10 +6,11 @@ import sys
 from matplotlib import pyplot as plt
 from maskV2 import make_mask
 from rotate import rotate
+from crop import crop_img
 
 if __name__ == '__main__':
     
-    filename = 'traff2.jpg'
+    filename = 'DSC_0634.JPG'
     src = cv2.imread(filename, cv2.IMREAD_COLOR)
     
     #Pre-processing
@@ -30,9 +31,11 @@ if __name__ == '__main__':
 
     rotate('mask.png')
 
+    crop_img('rotated.png')
+    
     #tesseract Output
     print "=====After Rotation Tesseract output======"
-    message = pytesseract.image_to_string(Image.open('rotated.png'))
+    message = pytesseract.image_to_string(Image.open('cropped.png'))
     print message
     
     cv2.waitKey(0)
