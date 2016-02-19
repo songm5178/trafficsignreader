@@ -40,74 +40,76 @@ def crop_img(filename):
     smallestIndex = 0
     smaller = 99999
     smallerIndex = 0
+    if screenCnt:
+        for i in range(0, 4):
+            if screenCnt[i][0][0] < smallest:
+                smaller = smallest
+                smallerIndex = smallestIndex
+                smallest = screenCnt[i][0][0]
+                smallestIndex = i
+            elif screenCnt[i][0][0] > smallest and screenCnt[i][0][0] < smaller:
+                smaller = screenCnt[i][0][0]
+                smallerIndex = i
+        left = []
+        left.append(smallestIndex)
+        left.append(smallerIndex)
 
-    for i in range(0, 4):
-        if screenCnt[i][0][0] < smallest:
-            smaller = smallest
-            smallerIndex = smallestIndex
-            smallest = screenCnt[i][0][0]
-            smallestIndex = i
-        elif screenCnt[i][0][0] > smallest and screenCnt[i][0][0] < smaller:
-            smaller = screenCnt[i][0][0]
-            smallerIndex = i
-    left = []
-    left.append(smallestIndex)
-    left.append(smallerIndex)
+        smallest = 99999
+        smallestIndex = 0
+        smaller = 99999
+        smallerIndex = 0
+        for i in range(0, 4):
+            if screenCnt[i][0][1] < smallest:
+                smaller = smallest
+                smallerIndex = smallestIndex
+                smallest = screenCnt[i][0][1]
+                smallestIndex = i
+            elif screenCnt[i][0][1] > smallest and screenCnt[i][0][1] < smaller:
+                smaller = screenCnt[i][0][1]
+                smallerIndex = i
+        top = []
+        top.append(smallestIndex)
+        top.append(smallerIndex)
 
-    smallest = 99999
-    smallestIndex = 0
-    smaller = 99999
-    smallerIndex = 0
-    for i in range(0, 4):
-        if screenCnt[i][0][1] < smallest:
-            smaller = smallest
-            smallerIndex = smallestIndex
-            smallest = screenCnt[i][0][1]
-            smallestIndex = i
-        elif screenCnt[i][0][1] > smallest and screenCnt[i][0][1] < smaller:
-            smaller = screenCnt[i][0][1]
-            smallerIndex = i
-    top = []
-    top.append(smallestIndex)
-    top.append(smallerIndex)
-
-    leftTop = 0
-    leftBottom = 0
-    rightTop = 0
-    rightBottom = 0
-    for i in range(0, 4):
-        if i in left:
-            if i in top:
-                leftTop = i
+        leftTop = 0
+        leftBottom = 0
+        rightTop = 0
+        rightBottom = 0
+        for i in range(0, 4):
+            if i in left:
+                if i in top:
+                    leftTop = i
+                else:
+                    leftBottom = i
             else:
-                leftBottom = i
-        else:
-            if i in top:
-                rightTop = i
-            else:
-                rightBottom = i
-    
-    dx = screenCnt[rightTop][0][0] - screenCnt[leftTop][0][0]
-    dy = screenCnt[rightTop][0][1] - screenCnt[leftTop][0][1]
-    angle = math.degrees(math.atan2(-dy, dx))
-    centerx = 0
-    centery = 0
-    for i in range(0, 4):
-        centerx = centerx + screenCnt[i][0][0]
-        centery = centery + screenCnt[i][0][1]
-    centerx = centerx / 4
-    centery = centery / 4
-    (rows, cols, _) = img.shape
+                if i in top:
+                    rightTop = i
+                else:
+                    rightBottom = i
+        
+        dx = screenCnt[rightTop][0][0] - screenCnt[leftTop][0][0]
+        dy = screenCnt[rightTop][0][1] - screenCnt[leftTop][0][1]
+        angle = math.degrees(math.atan2(-dy, dx))
+        centerx = 0
+        centery = 0
+        for i in range(0, 4):
+            centerx = centerx + screenCnt[i][0][0]
+            centery = centery + screenCnt[i][0][1]
+        centerx = centerx / 4
+        centery = centery / 4
+        (rows, cols, _) = img.shape
 
-    M = cv2.getRotationMatrix2D((centerx,centery),-angle, 1)
-    dst = cv2.warpAffine(img,M,(cols,rows))
-    cv2.imshow("asdf", dst)
+        M = cv2.getRotationMatrix2D((centerx,centery),-angle, 1)
+        dst = cv2.warpAffine(img,M,(cols,rows))
+        cv2.imshow("asdf", dst)
 
-    #screenCnt = cv2.convexHull(screenCnt)
-    cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
-    cv2.imshow("traffic", img)
+        #screenCnt = cv2.convexHull(screenCnt)
+        cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
+        cv2.imshow("traffic", img)
 
-    crop_img = img[screenCnt[leftTop][0][1]-50:screenCnt[leftBottom][0][1]+50, screenCnt[leftTop][0][0]-50:screenCnt[rightBottom][0][0]+50]
+        crop_img = img[screenCnt[leftTop][0][1]-50:screenCnt[leftBottom][0][1]+50, screenCnt[leftTop][0][0]-50:screenCnt[rightBottom][0][0]+50]
+    else:
+        crop_img = img
     cv2.imshow('crop_img', crop_img)
 
     cv2.imwrite('cropped.png', crop_img)

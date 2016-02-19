@@ -40,11 +40,10 @@ def rotate(filename):
             screenCnt = approx
             break
             
-    #print [screenCnt]
+    #print screenCnt
 
     
-    if screenCnt is not None:
-
+    if screenCnt:
         smallest = 99999
         smallestIndex = 0
         smaller = 99999
