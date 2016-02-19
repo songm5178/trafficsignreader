@@ -40,7 +40,9 @@ def crop_img(filename):
     smallestIndex = 0
     smaller = 99999
     smallerIndex = 0
-    if screenCnt:
+    if screenCnt == None:
+        crop_img = img
+    else:
         for i in range(0, 4):
             if screenCnt[i][0][0] < smallest:
                 smaller = smallest
@@ -108,8 +110,7 @@ def crop_img(filename):
         cv2.imshow("traffic", img)
 
         crop_img = img[screenCnt[leftTop][0][1]-50:screenCnt[leftBottom][0][1]+50, screenCnt[leftTop][0][0]-50:screenCnt[rightBottom][0][0]+50]
-    else:
-        crop_img = img
+
     cv2.imshow('crop_img', crop_img)
 
     cv2.imwrite('cropped.png', crop_img)

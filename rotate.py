@@ -43,7 +43,9 @@ def rotate(filename):
     #print screenCnt
 
     
-    if screenCnt:
+    if screenCnt == None:
+        dst = img
+    else:
         smallest = 99999
         smallestIndex = 0
         smaller = 99999
@@ -113,8 +115,7 @@ def rotate(filename):
         cv2.imshow("traffic", img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()    
-    else:
-        dst = img
+
     
     cv2.imshow("Rotate output", dst)
     cv2.waitKey(0)
