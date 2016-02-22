@@ -7,27 +7,30 @@ from PIL import Image
 from matplotlib import pyplot as plt
 
 
-filename = 'traff3.jpg'
+filename = 'DSC_0723.JPG'
 
 img = cv2.imread(filename)
+cv2.imshow('ori', img)
 
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 cv2.imshow('gray', gray)
 cv2.imwrite('gray.jpg', gray)
-print '11111111111'
-message = pytesseract.image_to_string(Image.open('gray.jpg'))
-print message
+oedges = cv2.Canny(gray, 150, 170);
+cv2.imwrite('Oedge.jpg', oedges);
+
+
 
 
 #gray = cv2.bilateralFilter(gray, 11, 17,17 )
 equ = cv2.equalizeHist(gray)
-cv2.imwrite('equ.jpg', equ)
-print '2222222222'
-message = pytesseract.image_to_string(Image.open('equ.jpg'))
-print message
-
-
 cv2.imshow('equ', equ)
+cv2.imwrite('equ.jpg', equ)
+hedges = cv2.Canny(equ, 150, 170);
+cv2.imshow('Hedge', hedges)
+cv2.imwrite('Hedge.jpg', hedges);
+
+
+
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

@@ -9,7 +9,9 @@ from matplotlib import pyplot as plt
 
 
 
+
 filename = '../traff2.jpg';
+
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -122,6 +124,7 @@ cv2.imshow("traffic", edges)
 
 crop_img = edges[screenCnt[leftTop][0][1]-20:screenCnt[leftBottom][0][1]+20, screenCnt[leftTop][0][0]-20:screenCnt[rightBottom][0][0]+20]
 cv2.imshow('crop_img', crop_img)
+cv2.imwrite('crop_img.jpg', crop_img)
 
 
 ### hough detection
