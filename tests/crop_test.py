@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 
 
 
-filename = './DSC_0723.JPG';
+filename = 'traff3.jpg';
 
 img = cv2.imread(filename);
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -118,6 +118,7 @@ cv2.imshow("traffic", img)
 
 crop_img = img[screenCnt[leftTop][0][1]-50:screenCnt[leftBottom][0][1]+50, screenCnt[leftTop][0][0]-50:screenCnt[rightBottom][0][0]+50]
 cv2.imshow('crop_img', crop_img)
+cv2.imwrite('crop_img.jpg', crop_img)
 
 
 ### hough detection
