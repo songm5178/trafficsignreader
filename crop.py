@@ -109,7 +109,7 @@ def crop_img(filename):
         cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
         cv2.imshow("traffic", img)
 
-        crop_img = img[screenCnt[leftTop][0][1]-50:screenCnt[leftBottom][0][1]+50, screenCnt[leftTop][0][0]-50:screenCnt[rightBottom][0][0]+50]
+        crop_img = img[screenCnt[leftTop][0][1]-20:screenCnt[leftBottom][0][1]+20, screenCnt[leftTop][0][0]-20:screenCnt[rightBottom][0][0]+20]
 
     cv2.imshow('crop_img', crop_img)
 

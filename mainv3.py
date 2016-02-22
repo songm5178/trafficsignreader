@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     ofile = open('results.txt', 'w')
     
-    mypath = 'trafficSign/'
+    mypath = 'TestFolder/'
     nFiles = [f for f in listdir(mypath) if isfile(join(mypath,f))]
     src = np.empty(len(nFiles), dtype=object)
     for i in range(0, len(nFiles)):
@@ -25,7 +25,11 @@ if __name__ == '__main__':
         filename = 'tests/DSC_0612.JPG'
         src = cv2.imread(filename, cv2.IMREAD_COLOR)
         """
-        
+        height, width = src[i].shape[:2]
+        while height > 3000 or width > 3000:
+            src[i] = cv2.resize(src[i],(width/2, height/2), interpolation = cv2.INTER_CUBIC)
+            height, width = src[i].shape[:2]
+            
         #Pre-processing
         """
         blur = np.ones((src.shape[0],src.shape[1]), np.uint8)
@@ -40,9 +44,9 @@ if __name__ == '__main__':
 
         #Rotate
         
-        """
+        
         rotate('mask.png')
-        """
+        
         
         #tesseract Output
         #print "=====After Rotation Tesseract output======"

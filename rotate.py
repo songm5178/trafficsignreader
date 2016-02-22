@@ -15,12 +15,12 @@ def rotate(filename):
     img = cv2.imread(filename);
     gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     gray = cv2.bilateralFilter(gray, 11, 17,17 )
-    cv2.imshow('gray',gray)
+    #cv2.imshow('gray',gray)
     cv2.waitKey(0)
     cv2.destroyAllWindows()    
 
     edges = cv2.Canny(gray, 150, 170);
-    cv2.imshow('edge', edges);
+    #cv2.imshow('edge', edges);
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     
@@ -112,12 +112,12 @@ def rotate(filename):
         M = cv2.getRotationMatrix2D((centerx,centery),-angle, 1)
         dst = cv2.warpAffine(img,M,(cols,rows))
         cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
-        cv2.imshow("traffic", img)
+        #cv2.imshow("traffic", img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()    
 
     
-    cv2.imshow("Rotate output", dst)
+    #cv2.imshow("Rotate output", dst)
     cv2.waitKey(0)
     cv2.destroyAllWindows()    
     cv2.imwrite('rotated.png', dst)
